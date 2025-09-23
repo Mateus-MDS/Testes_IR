@@ -1,49 +1,54 @@
+# == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.2.0)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.2.0)
+set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
+if (EXISTS ${picoVscode})
+    include(${picoVscode})
+endif()
+# ====================================================================================
+set(PICO_BOARD pico CACHE STRING "Board type")
+
 cmake_minimum_required(VERSION 3.13)
 
 # Incluir Pico SDK
 include(pico_sdk_import.cmake)
 
-project(ir_web_controller C CXX ASM)
+project(emissor C CXX ASM)
 
 # Inicializar SDK
 pico_sdk_init()
 
-# Verificar se é Pico W
-if (NOT TARGET pico_cyw43_arch_lwip_poll)
-    message(FATAL_ERROR "Este projeto requer Raspberry Pi Pico W")
-endif()
-
 # Executável principal
-add_executable(ir_web_controller
-    ir_web_controller.c
+add_executable(emissor
+    emissor.c
 )
 
 # Configurar nome e versão
-pico_set_program_name(ir_web_controller "IR Web Controller")
-pico_set_program_version(ir_web_controller "1.0")
+pico_set_program_name(emissor "emissor")
+pico_set_program_version(emissor "1.0")
 
 # Habilitar USB para debug
-pico_enable_stdio_usb(ir_web_controller 1)
-pico_enable_stdio_uart(ir_web_controller 0)
+pico_enable_stdio_usb(emissor 1)
+pico_enable_stdio_uart(emissor 0)
 
-# Definir credenciais WiFi (substitua pelos seus)
-target_compile_definitions(ir_web_controller PRIVATE
-    WIFI_SSID=\"SUA_REDE_WIFI\"
-    WIFI_PASSWORD=\"SUA_SENHA_WIFI\"
-)
 
 # Linkar bibliotecas necessárias
-target_link_libraries(ir_web_controller
+target_link_libraries(emissor
     pico_stdlib
-    pico_cyw43_arch_lwip_poll
     hardware_gpio
     hardware_timer
 )
 
 # Incluir diretórios
-target_include_directories(ir_web_controller PRIVATE
+target_include_directories(emissor PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Gerar arquivos UF2
-pico_add_extra_outputs(ir_web_controller)
+pico_add_extra_outputs(emissor)
