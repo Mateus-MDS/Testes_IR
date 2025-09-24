@@ -10,7 +10,6 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/timer.h"
-#include "hardware/i2c.h"
 
 // Bibliotecas do display (se disponível)
 #ifdef USE_DISPLAY
@@ -22,8 +21,8 @@
 #define IR_RX_PIN 17        // Sensor IR
 #define LED_STATUS 25       // LED onboard
 #define MAX_TRANSITIONS 1024 // Máximo de transições por sinal (aumentado)
-#define MIN_SIGNAL_GAP_US 10000   // 10ms de silêncio = fim de comando (aumentado)
-#define MAX_PULSE_US 50000        // Máximo 50ms por pulso (aumentado)
+#define MIN_SIGNAL_GAP_US 30000   // 30ms de silêncio = fim de comando (aumentado)
+#define MAX_PULSE_US 100000        // Máximo 100ms por pulso (aumentado)
 #define MIN_PULSE_US 50           // Mínimo 50us por pulso (diminuído)
 #define MAX_SIGNALS 5             // Máximo de sinais para capturar
 #define DEBOUNCE_TIME_US 20       // Tempo de debounce em microssegundos
