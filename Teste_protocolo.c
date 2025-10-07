@@ -1,8 +1,5 @@
 /**
- * main.c - Exemplo de uso do protocolo IR customizado
- * 
- * Este exemplo demonstra como usar o protocolo IR para controlar
- * um ar condicionado com o Raspberry Pi Pico
+ * Exemplo de controle de ar condicionado via PWM
  */
 
 #include <stdio.h>
@@ -101,8 +98,7 @@ void show_menu() {
     printf("4 - Temperatura 20°C\n");
     printf("5 - Ventilador Nível 1\n");
     printf("6 - Ventilador Nível 2\n");
-    printf("7 - Demo automática\n");
-    printf("8 - Mostrar estado atual\n");
+    printf("7 - Mostrar estado atual\n");
     printf("0 - Mostrar menu\n");
     printf("====================================\n");
     printf("Digite uma opção: ");
@@ -182,23 +178,6 @@ void process_uart_input() {
         default:
             printf("Opção inválida! Digite '0' para ver o menu.\n");
             break;
-    }
-}
-
-// Pisca LED para indicar funcionamento
-void heartbeat_led() {
-    static uint32_t last_blink = 0;
-    static bool led_state = false;
-    uint32_t current_time = to_ms_since_boot(get_absolute_time());
-    
-    // Pisca a cada 2 segundos se estiver desligado
-    // ou mantém aceso se estiver ligado
-    if (current_state == STATE_OFF) {
-        if (current_time - last_blink >= 2000) {
-            led_state = !led_state;
-            gpio_put(LED_PIN, led_state);
-            last_blink = current_time;
-        }
     }
 }
 
